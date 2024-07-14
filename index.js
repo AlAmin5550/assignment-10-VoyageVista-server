@@ -7,7 +7,7 @@ const port = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 app.use(
   cors({
-      origin: ['http://localhost:5173', 'https://voyagevista-871f2.web.app'],
+      origin: ['http://localhost:5173', 'https://voyagevista-871f2.web.app','https://playful-sprinkles-116624.netlify.app','https://669403cb99701584a58c5d65--playful-sprinkles-116624.netlify.app'],
       credentials: true,
   }),
 )
@@ -35,6 +35,13 @@ async function run() {
       const cursor = touristSpotsCollection.find();
       const result = await cursor.toArray();
       res.send(result)
+
+    })
+    app.get('/mySpots', async(req,res)=>{
+      const email = req.query.email;
+      const query = {user_email: email}
+      const result = await touristSpotsCollection.find(query).toArray();
+      res.send(result);
 
     })
     app.get('/touristSpots/:id', async (req, res) => {
